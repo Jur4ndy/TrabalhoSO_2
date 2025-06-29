@@ -15,12 +15,13 @@ public class Barbearia{
 	Barbeiro Dentinho;
 	Barbeiro Otto;
 	Sargento Tainha;
-	
+	Tenente Escovinha;
 	
 	
 	
 	
 	public Barbearia(int tempoSono) {
+		Escovinha = new Tenente(cadeiras);
 		RecrutaZero = new Barbeiro();
 		Dentinho = new Barbeiro();
 		Otto = new Barbeiro();
@@ -31,17 +32,25 @@ public class Barbearia{
 	
 	//1 Barbeiro;
 	public void casoA() {
+		while(Tainha.tentativas < 3) {
+			
+		}
 		
 	}
 	
 	//2 Barbeiros;
 	public void casoB() {
+		while(Tainha.tentativas < 3) {
 			
+		}	
+		
 	}
 	
 	//3 barbeiros, 1 para cada tipo de cliente;
 	public void casoC() {
-		
+		while(Tainha.tentativas < 3) {
+			
+		}
 	}
 
 	 public static void main(String[] args) {

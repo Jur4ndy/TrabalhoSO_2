@@ -3,7 +3,6 @@ package trabalhoSO_2;
 public class Barbeiro extends Thread {
 	int cliente;
 	long tempoAtendimento;
-
 	
 	public Barbeiro() {
 	}
