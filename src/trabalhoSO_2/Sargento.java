@@ -4,10 +4,10 @@ import java.util.LinkedList.*;
 
 public class Sargento extends Thread {
 	double tempoSono; //em segundos
-	LinkedList<Cliente> cadeiras;
-	LinkedList<Cliente> proxClientes;
+	LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();
+	LinkedList<Integer> proxClientes = new LinkedList<Integer>();
 	int tentativas;
-	Sargento(double tempoSono, LinkedList<Cliente> cadeiras, LinkedList<Cliente> proxClientes) {
+	Sargento(double tempoSono, LinkedList<Cliente> cadeiras, LinkedList<Integer> proxClientes) {
 		this.tempoSono = tempoSono;
 		this.cadeiras = cadeiras;
 		this.proxClientes = proxClientes;
@@ -19,8 +19,9 @@ public class Sargento extends Thread {
 	public void run() {
 		try {
 			wait((long)(tempoSono*(1000)));
-			if (cadeiras.size() < 20 && proxClientes.isEmpty()) {
-				cadeiras.add(proxClientes.getFirst());
+			if (!proxClientes.isEmpty() && tentativas < 3) {
+				if (cadeiras.size() < 20) cadeiras.add(new Cliente(proxClientes.getFirst()));
+				if (proxClientes.getFirst() == 0) tentativas ++;
 				proxClientes.remove(0);
 			}
 		}

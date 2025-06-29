@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 //todas as alterações às filas de clientes seram feitas pela barbearia
 public class Barbearia{
-	LinkedList<Cliente> proxClientes = new LinkedList<Cliente>();
+	LinkedList<Integer> proxClientes = new LinkedList<Integer>();
 	LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 	int ocupacao = 0;
 	Barbeiro RecrutaZero;
@@ -31,36 +31,6 @@ public class Barbearia{
 	
 	//1 Barbeiro;
 	public void casoA() {
-		int semClientes = 0;
-		while(semClientes < 3) {
-			//Se o Sargento estiver acordado
-			if (!Tainha.isAlive()) {
-				if (ocupacao < 20 && proxClientes.getFirst().tipo != 0) {
-					//Se há cadeiras livres, adiciona apenas um cliente
-					cadeiras.add(proxClientes.getFirst());
-					cadeiras.get(ocupacao).run(); //contar o tempo de espera
-					ocupacao++;
-					proxClientes.remove();
-				}
-				else if (ocupacao < 20) {
-					semClientes++;
-				}
-				Tainha.run(); //Tira um cochilo
-			}
-			
-			//Se o Recruta estiver livre
-			if(!RecrutaZero.isAlive()) {
-				Collections.sort(cadeiras, new SortByTipo());
-				if (ocupacao != 0 && cadeiras.getFirst().tipo != 0) {
-					// tira o primeiro da fila para cortar o cabelo
-					RecrutaZero.run(cadeiras.getFirst().tipo); 
-					
-					cadeiras.remove();
-					
-				}
-			}
-			
-		}
 		
 	}
 	
