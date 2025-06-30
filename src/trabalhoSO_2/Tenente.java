@@ -37,7 +37,7 @@ public class Tenente extends Thread{
 		this.Otto = Otto;
 	}
 	
-	public void reportFinished() {
+	public void report() {
 		length = length/reportCounter;
 		percent_0 *= ((1/reportCounter)/20)*100;
 		percent_1 *= ((1/reportCounter)/20)*100;

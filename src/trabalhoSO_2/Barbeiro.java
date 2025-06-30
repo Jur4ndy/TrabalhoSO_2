@@ -36,20 +36,19 @@ public class Barbeiro extends Thread {
 		
 		switch (cliente.tipo) {
 			case 1:
-				atendimento_1 += (random*(2000) + 4000);
-				return (random*(2000) + 4000);		
+				atendimento_1 += (cliente.tempoServico);
+	
 			case 2:
-				atendimento_2 += (random*(2000) + 2000);
-				return (random*(2000) + 2000);
+				atendimento_2 += (cliente.tempoServico);
+
 			case 3:
-				atendimento_3 += (random*(2000) + 1000);
-				return (random*(2000) + 1000);
-			default:
-				return 0;
+				atendimento_3 += (cliente.tempoServico);
+
 		}
+		return cliente.tempoServico;
 	}
 	
-	public Cliente selectClient() {
+	public synchronized Cliente selectClient() {
 		/*IMPORTANTE!!!!! Dois Barbeiros NUNCA devem escolher os seus clientes ao mesmo tempo, essa funcao so deve ser liberada
 		 * APOS o cliente alvo ser removido da lista.
 		*/
