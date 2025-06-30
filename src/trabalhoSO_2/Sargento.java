@@ -18,11 +18,13 @@ public class Sargento extends Thread {
 	 */
 	public void run() {
 		try {
+			while (true) {
 			wait((long)(tempoSono*(1000)));
 			if (!proxClientes.isEmpty() && tentativas < 3) {
 				if (cadeiras.size() < 20) cadeiras.add(new Cliente(proxClientes.getFirst()));
 				if (proxClientes.getFirst() == 0) tentativas ++;
 				proxClientes.remove(0);
+			}
 			}
 		}
 		catch(Exception e) {

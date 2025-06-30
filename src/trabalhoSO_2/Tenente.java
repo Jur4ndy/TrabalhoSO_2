@@ -22,16 +22,19 @@ public class Tenente extends Thread{
 	double atend_1;
 	double atend_2;
 	double atend_3;
-	double atend_1_uncounted;
-	double atend_2_uncounted;
-	double atend_3_uncounted;
 	//Contadores
 	int reportCounter;
 	int atendCounter;
-	int atendUncounted;
 	
-	public Tenente(LinkedList<Cliente> cadeiras) {
+	Barbeiro RecrutaZero;
+	Barbeiro Dentinho;
+	Barbeiro Otto;
+	
+	public Tenente(LinkedList<Cliente> cadeiras, Barbeiro RecrutaZero, Barbeiro Dentinho, Barbeiro Otto) {
 		this.cadeiras = cadeiras;
+		this.RecrutaZero = RecrutaZero;
+		this.Dentinho = Dentinho;
+		this.Otto = Otto;
 	}
 	
 	public void reportFinished() {
@@ -85,14 +88,7 @@ public class Tenente extends Thread{
 					length++;
 				}
 				reportCounter++;
-				atend_1 += atend_1_uncounted;
-				atend_2 += atend_2_uncounted;
-				atend_3 += atend_3_uncounted;
-				atendCounter += atendUncounted;
-				atend_1_uncounted = 0;
-				atend_2_uncounted = 0;
-				atend_3_uncounted = 0;
-				atendUncounted = 0;
+				atualizaAtendimento();
 			}
 			
 		}
@@ -101,13 +97,14 @@ public class Tenente extends Thread{
 		}
 	}
 	
-	public void atendimentoCompleto(double time, int tipo) {
-		switch (tipo) {
-			case 1: atend_1_uncounted++;
-			case 2:	atend_2_uncounted++;
-			case 3: atend_3_uncounted++;
-		}
-		atendUncounted++;
+	public void atualizaAtendimento() {
+		atend_1 += RecrutaZero.atendimento_1 + Dentinho.atendimento_1 + Otto.atendimento_1;
+		atend_2 += RecrutaZero.atendimento_2 + Dentinho.atendimento_2 + Otto.atendimento_2;
+		atend_3 += RecrutaZero.atendimento_3 + Dentinho.atendimento_3 + Otto.atendimento_3;
+		atendCounter += RecrutaZero.atendCount + Dentinho.atendCount + Otto.atendCount;
+		RecrutaZero.resetAtend();
+		Dentinho.resetAtend();
+		Otto.resetAtend();
 	};
 	
 	
