@@ -2,10 +2,10 @@ package trabalhoSO_2;
 
 public class Cliente {
 	int tipo;
-	long tempoServico;
+	double tempoServico;
 	long startTime;
 	
-	public Cliente(int tipo, long tempoServico) {
+	public Cliente(int tipo, double tempoServico) {
 		this.tipo = tipo;
 		this.tempoServico = tempoServico;
 		startTime = System.currentTimeMillis();

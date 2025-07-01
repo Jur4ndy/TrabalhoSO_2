@@ -102,7 +102,7 @@ public class Barbeiro extends Thread {
 		try {
 			while (true) {
 				Cliente cliente = selectClient();
-				tempoAtendimento = (long) cutHair(cliente);
+				tempoAtendimento = (long) cutHair(cliente)*1000;
 				wait(tempoAtendimento);
 			}
 		}

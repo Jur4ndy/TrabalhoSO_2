@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import tSO3.PageInfo;
 
 
 
@@ -42,6 +41,7 @@ public class Barbearia{
 	//1 Barbeiro;
 	public void casoA() {
 		Tainha = new Sargento(tempoSono, cadeiras, proxClientes);
+		LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 		while(Tainha.tentativas < 3) {
 			Tainha.run();
 			RecrutaZero.run();
@@ -54,6 +54,7 @@ public class Barbearia{
 	//2 Barbeiros;
 	public void casoB() {
 		Tainha = new Sargento(tempoSono, cadeiras, proxClientes);
+		LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 		Dentinho.modo = 0;
 		while(Tainha.tentativas < 3) {
 			Tainha.run();
@@ -67,6 +68,7 @@ public class Barbearia{
 	//3 barbeiros, 1 para cada tipo de cliente;
 	public void casoC() {
 		Tainha = new Sargento(tempoSono, cadeiras, proxClientes);
+		LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 		Dentinho.modo = 1;
 		Otto.modo = 2;
 		while(Tainha.tentativas < 3) {
@@ -79,7 +81,7 @@ public class Barbearia{
 		Escovinha.report();
 	}
 
-	public void getClients(String text) {
+	public void getClientes(String text) {
 		try {
 			File file = new File(text);
 			Scanner scan = new Scanner(file);
@@ -87,7 +89,7 @@ public class Barbearia{
 			line = line.replace("<", "");
 			String[] clientsData = line.split(">");
 			int tipo = -1;
-			long tempoServico = -1;
+			double tempoServico = -1;
 			int ind = 0;
 			
 			for (String data : clientsData) {   
@@ -95,7 +97,7 @@ public class Barbearia{
 					tipo = Integer.parseInt(data);
 				}
 				else {
-					tempoServico = Long.parseLong(data);
+					tempoServico = Double.parseDouble(data);
 					proxClientes.add(new Cliente(tipo, tempoServico));
 				}
 			}
