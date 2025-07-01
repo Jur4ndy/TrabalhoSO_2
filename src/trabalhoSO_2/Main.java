@@ -8,16 +8,12 @@ public class Main {
 		// TODO Auto-generated method stub
     //me mata pfv
 	Barbearia Dorminhoco = new Barbearia(3);
-	Scanner scan = new Scanner(System.in);
-	System.out.println("Enter .txt file link. \nTest File: home/ju/eclipse-workspace/TrabalhoSO_2/teste.txt/");
-	String link = scan.nextLine();
 	//home/ju/eclipse-workspace/TrabalhoSO_2/teste.txt
-	Dorminhoco.getClientes(link);
-	String wait = scan.nextLine();
+	Dorminhoco.getClientes(1);
 	Dorminhoco.casoA();
-	Dorminhoco.getClientes(link);
+	Dorminhoco.getClientes(1);
 	Dorminhoco.casoB();
-	Dorminhoco.getClientes(link);
+	Dorminhoco.getClientes(1);
 	Dorminhoco.casoC();
 	}
 

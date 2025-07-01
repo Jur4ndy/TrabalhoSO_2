@@ -71,7 +71,7 @@ public class Tenente extends Thread{
 	public void run() {
 		try {
 			while (true) {
-				wait(3000); //espera por 3 segundos antes de atualizar.
+				sleep(3000); //espera por 3 segundos antes de atualizar.
 				for (Cliente cliente : cadeiras) {
 					switch (cliente.tipo) {
 						case 0: percent_0++;

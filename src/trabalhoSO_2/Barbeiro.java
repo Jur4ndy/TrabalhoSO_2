@@ -53,7 +53,7 @@ public class Barbeiro extends Thread {
 		 * APOS o cliente alvo ser removido da lista.
 		*/
 		int highestRank = 0;
-		int target = 0;
+		int target = -1;
 		int ind = 0;
 		switch (modo) {
 		case 0:
@@ -64,8 +64,10 @@ public class Barbeiro extends Thread {
 				}
 				ind++;
 			}
-			cadeiras.remove(target);
-			return cadeiras.get(target);
+			if (target != -1) {
+				cadeiras.remove(target);			
+				return cadeiras.get(target);
+			}
 		case 1:
 			for (Cliente cliente : cadeiras) {
 				if (cliente.tipo == 1) {
@@ -78,8 +80,10 @@ public class Barbeiro extends Thread {
 				}
 				ind++;
 			}
-			cadeiras.remove(target);
-			return cadeiras.get(target);
+			if (target != -1) {
+				cadeiras.remove(target);			
+				return cadeiras.get(target);
+			}
 	   	case 2:
 	   		for (Cliente cliente : cadeiras) {
 				if (cliente.tipo == 2) {
@@ -92,9 +96,11 @@ public class Barbeiro extends Thread {
 				}
 				ind++;
 			}
-	   		cadeiras.remove(target);
-			return cadeiras.get(target);
-	   	default: return null;
+	   		if (target != -1) {
+				cadeiras.remove(target);			
+				return cadeiras.get(target);
+			}
+	   		default: return null;
 		}
 	}
 	
@@ -103,7 +109,7 @@ public class Barbeiro extends Thread {
 			while (true) {
 				Cliente cliente = selectClient();
 				tempoAtendimento = (long) cutHair(cliente)*1000;
-				wait(tempoAtendimento);
+				sleep(tempoAtendimento);
 			}
 		}
 		catch (Exception e) {

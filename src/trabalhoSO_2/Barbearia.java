@@ -80,6 +80,52 @@ public class Barbearia{
 		}
 		Escovinha.report();
 	}
+	
+	public void getClientes(int num) {
+		String entrada = "";
+		double d1 = 0;
+		int tipo = 0;
+		double d2 = 0;
+		double tempo = 0;
+		for (int i = 0; i < num; i++) {
+			d1 = Math.random();
+			d2 = Math.random();
+			if (d1 < 0.25) tipo = 0;
+			else if (d1 < 0.5) tipo = 1;
+			else if (d1 < 0.75) tipo = 2;
+			else tipo = 3;
+			switch(tipo) {
+			case 0: tempo = 0;
+			// 0.9999999999999999 == 1
+			case 3: tempo = 1 + 2*d2;
+			case 2: tempo = 2 + 2*d2;
+			case 1: tempo = 4 + 2*d2;
+			}
+			entrada += "<" + tipo + "><" + tempo + ">";
+		}
+		getClients(entrada);
+	}
+	
+	public void getClients(String line) {		
+			line = line.replace("<", "");
+			String[] clientsData = line.split(">");
+			int tipo = -1;
+			double tempoServico = -1;
+			int ind = 0;
+			
+			for (String data : clientsData) {   
+				if (ind%2 == 0) {
+					tipo = Integer.parseInt(data);
+					tipo = Math.abs(tipo - 3) + 1;
+				}
+				else {
+					tempoServico = Double.parseDouble(data);
+					proxClientes.add(new Cliente(tipo, tempoServico));				
+				}
+				ind++;
+			}
+			System.out.println("Clientes na fila: " + (ind+1)/2);
+	}
 
 	public void getClientes(String text) {
 		try {
@@ -95,17 +141,19 @@ public class Barbearia{
 			for (String data : clientsData) {   
 				if (ind%2 == 0) {
 					tipo = Integer.parseInt(data);
+					tipo = Math.abs(tipo - 3) + 1;
 				}
 				else {
 					tempoServico = Double.parseDouble(data);
-					proxClientes.add(new Cliente(tipo, tempoServico));
+					proxClientes.add(new Cliente(tipo, tempoServico));				
 				}
+				ind++;
 			}
 			System.out.println("Clientes na fila: " + (ind+1)/2);
 			scan.close();
 		}
 		catch(IOException erro) {
-			System.out.println("ERROR! file not found");
+			System.out.println("ERROR! file not found: " + erro);
 		}
 	}
 }

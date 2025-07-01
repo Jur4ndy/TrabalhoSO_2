@@ -19,7 +19,7 @@ public class Sargento extends Thread {
 	public void run() {
 		try {
 			while (true) {
-			wait((long)(tempoSono*(1000)));
+			sleep((long)(tempoSono*(1000)));
 			if (!proxClientes.isEmpty() && tentativas < 3) {
 				if (cadeiras.size() < 20) {
 					proxClientes.getFirst().resetTime();
