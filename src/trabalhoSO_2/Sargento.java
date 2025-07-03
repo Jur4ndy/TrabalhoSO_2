@@ -31,9 +31,9 @@ public class Sargento extends Thread {
 					proxClientes.getFirst().resetTime();
 					switch(proxClientes.getFirst().tipo) {
 						case 0: tentativas ++;
-						case 1:	cadeiras_1.add(proxClientes.getFirst());
-						case 2: cadeiras_2.add(proxClientes.getFirst());
-						case 3: cadeiras_3.add(proxClientes.getFirst());
+						case 1:	cadeiras_1.add(proxClientes.getFirst()); tentativas = 0;
+						case 2: cadeiras_2.add(proxClientes.getFirst()); tentativas = 0;
+						case 3: cadeiras_3.add(proxClientes.getFirst()); tentativas = 0;
 					}
 					System.out.println("Tenente adicionou: " + proxClientes.getFirst().toString());
 				}
