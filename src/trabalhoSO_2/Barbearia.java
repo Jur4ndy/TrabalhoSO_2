@@ -43,26 +43,18 @@ public class Barbearia{
 	
 	//1 Barbeiro;
 	public void casoA() {
-	    Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
-	    
-	    Tainha.start();
-	    RecrutaZero.start();
-
-	    try {
-	        Thread.sleep(100); // pausa curta para dar tempo do sistema iniciar
-	    } catch (InterruptedException e) {
-	        e.printStackTrace();
-	    }
-
-	    Escovinha.start();
-
-	    try {
-	        Escovinha.join(); // espera o Tenente terminar
-	    } catch (InterruptedException e) {
-	        e.printStackTrace();
-	    }
+		Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
+		LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
+		Tainha.start();
+		RecrutaZero.start();
+		try {
+			wait(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		Escovinha.start();
+		while(Escovinha.stop) {	}
 	}
-
 	
 	//2 Barbeiros;
 	public void casoB() {
@@ -72,13 +64,13 @@ public class Barbearia{
 		Tainha.start();
 		RecrutaZero.start();
 		Dentinho.start();
-		 try {
-		        Thread.sleep(100); // pausa curta para dar tempo do sistema iniciar
-		    } catch (InterruptedException e) {
-		        e.printStackTrace();
-		    }
+		try {
+			wait(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		Escovinha.start();
-		while(Escovinha.isAlive()) {
+		while(!(Escovinha.stop)) {
 		}
 	}
 	
@@ -92,13 +84,13 @@ public class Barbearia{
 		RecrutaZero.start();
 		Dentinho.start();
 		Otto.start();
-		 try {
-		        Thread.sleep(100); // pausa curta para dar tempo do sistema iniciar
-		    } catch (InterruptedException e) {
-		        e.printStackTrace();
-		    }
+		try {
+			wait(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		Escovinha.start();
-		while(Escovinha.isAlive()) {
+		while(!(Escovinha.stop)) {
 		}
 	}
 	
@@ -187,7 +179,6 @@ class SortByTipo implements Comparator<Cliente> {
 		return Integer.compare(c1.tipo, c2.tipo);
 	}
 }
-
 
 
 

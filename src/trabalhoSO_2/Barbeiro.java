@@ -2,9 +2,10 @@ package trabalhoSO_2;
 
 import java.util.LinkedList;
 
+
+public class Barbeiro extends Thread {
 	int modo;
 	long tempoAtendimento;
-
 	LinkedList<Cliente> cadeiras_1 = new LinkedList<Cliente>();
 	LinkedList<Cliente> cadeiras_2 = new LinkedList<Cliente>();
 	LinkedList<Cliente> cadeiras_3 = new LinkedList<Cliente>();
@@ -14,8 +15,8 @@ import java.util.LinkedList;
 	double atendCount_1 = 0;
 	double atendCount_2 = 0;
 	double atendCount_3 = 0;
+	double atendCount = 0;
 	public boolean stop = true;
-
 	
 	public Barbeiro(LinkedList<Cliente> cadeiras_1, LinkedList<Cliente> cadeiras_2, LinkedList<Cliente> cadeiras_3, int modo) {
 		this.cadeiras_1 = cadeiras_1;
@@ -31,11 +32,11 @@ import java.util.LinkedList;
 	 */
 	// tipos de cliente 1-oficial 2-sargento 3-cabo 0-pausa
 	
-
 	public void resetAtend() {
 		atendimento_1 = 0;
 		atendimento_2 = 0;
 		atendimento_3 = 0;
+		atendCount = 0;
 		atendCount_1 = 0;
 		atendCount_2 = 0;
 		atendCount_3 = 0;
@@ -47,7 +48,6 @@ import java.util.LinkedList;
 		if (cliente == null || cliente.tipo == 0) {
 			return 0;
 		}
-		
 		switch (cliente.tipo) {
 			case 1:
 				atendimento_1 += (cliente.tempoServico);
@@ -137,7 +137,7 @@ import java.util.LinkedList;
 	public void run(){ // tell it to my heart tell me i'm the only one
 		stop = false;
 		try {
-			while (!Sargento.stop && !(cadeiras_1.isEmpty() && cadeiras_2.isEmpty() && cadeiras_3.isEmpty())) {
+			while (!Sargento.stop) {
 				Cliente cliente = selectClient();
 				if (cliente != null) {
 					System.out.println("Barbeiro cortando " + cliente.toString());
@@ -146,7 +146,6 @@ import java.util.LinkedList;
 				} 
 			}
 			stop = true;
-
 		}
 		catch (Exception e) {
 			System.out.println(e + " at Barbeiro.run()");

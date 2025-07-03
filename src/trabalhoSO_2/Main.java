@@ -6,15 +6,14 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-    //me mata pfv
-	Barbearia Dorminhoco = new Barbearia(1);
-	//home/ju/eclipse-workspace/TrabalhoSO_2/teste.txt
-	Dorminhoco.getClientes(20);
-	Dorminhoco.casoA();
-//	Dorminhoco.getClientes(20);
-//	Dorminhoco.casoB();
-//	Dorminhoco.getClientes(20);
-//	Dorminhoco.casoC();
+		//me mata pfv
+		Barbearia Dorminhoco = new Barbearia(1);
+		//home/ju/eclipse-workspace/TrabalhoSO_2/teste.txt
+		Dorminhoco.getClientes(20);
+		Dorminhoco.casoA();
+//		Dorminhoco.getClientes(20);
+//		Dorminhoco.casoB();
+//		Dorminhoco.getClientes(20);
+//		Dorminhoco.casoC();
 	}
-
 }

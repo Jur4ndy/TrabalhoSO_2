@@ -24,7 +24,7 @@ public class Sargento extends Thread {
 	public void run() {
 		try {LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 
-			while (tentativas < 3 && !proxClientes.isEmpty()) {
+			while (tentativas < 3) {
 			sleep((long)(tempoSono*(1000)));
 			Barbearia.semaphore.acquire();
 			if (!proxClientes.isEmpty() && tentativas < 3) {
@@ -36,7 +36,7 @@ public class Sargento extends Thread {
 						case 2: cadeiras_2.add(proxClientes.getFirst()); tentativas = 0; break;
 						case 3: cadeiras_3.add(proxClientes.getFirst()); tentativas = 0;
 					}
-					System.out.println("Tenente adicionou: " + proxClientes.getFirst().toString());
+					System.out.println("Sargento adicionou: " + proxClientes.getFirst().toString());
 				}
 				proxClientes.remove(0);	
 			}
