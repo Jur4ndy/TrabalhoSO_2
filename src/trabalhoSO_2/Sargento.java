@@ -9,6 +9,7 @@ public class Sargento extends Thread {
 	LinkedList<Cliente> cadeiras_3 = new LinkedList<Cliente>();
 	LinkedList<Cliente> proxClientes = new LinkedList<Cliente>();
 	int tentativas;
+	static boolean stop = false;
 	Sargento(double tempoSono, LinkedList<Cliente> cadeiras_1, LinkedList<Cliente> cadeiras_2, LinkedList<Cliente> cadeiras_3, LinkedList<Cliente> proxClientes) {
 		this.tempoSono = tempoSono;
 		this.cadeiras_1 = cadeiras_1;
@@ -23,16 +24,16 @@ public class Sargento extends Thread {
 	public void run() {
 		try {LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 
-			while (true) {
+			while (tentativas < 3) {
 			sleep((long)(tempoSono*(1000)));
 			Barbearia.semaphore.acquire();
 			if (!proxClientes.isEmpty() && tentativas < 3) {
 				if ((cadeiras_1.size() + cadeiras_2.size() + cadeiras_3.size()) < 20) {
 					proxClientes.getFirst().resetTime();
 					switch(proxClientes.getFirst().tipo) {
-						case 0: tentativas ++;
-						case 1:	cadeiras_1.add(proxClientes.getFirst()); tentativas = 0;
-						case 2: cadeiras_2.add(proxClientes.getFirst()); tentativas = 0;
+						case 0: tentativas ++; break;
+						case 1:	cadeiras_1.add(proxClientes.getFirst()); tentativas = 0; break;
+						case 2: cadeiras_2.add(proxClientes.getFirst()); tentativas = 0; break;
 						case 3: cadeiras_3.add(proxClientes.getFirst()); tentativas = 0;
 					}
 					System.out.println("Tenente adicionou: " + proxClientes.getFirst().toString());
@@ -45,5 +46,6 @@ public class Sargento extends Thread {
 		catch(Exception e) {
 			System.out.println(e);
 		}
+		stop = true;
 	}
 }

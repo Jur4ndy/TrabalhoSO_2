@@ -45,13 +45,15 @@ public class Barbearia{
 	public void casoA() {
 		Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
 		LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
-		while(Tainha.tentativas < 3) {
-			Tainha.run();
-			RecrutaZero.run();
-			Escovinha.run();
+		Tainha.start();
+		RecrutaZero.start();
+		try {
+			wait(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		Escovinha.report();
-		
+		Escovinha.start();
+		while(Escovinha.stop) {	}
 	}
 	
 	//2 Barbeiros;
@@ -59,13 +61,17 @@ public class Barbearia{
 		Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
 		LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 		Dentinho.modo = 0;
-		while(Tainha.tentativas < 3) {
-			Tainha.run();
-			RecrutaZero.run();
-			Dentinho.run();
-			Escovinha.run();
+		Tainha.start();
+		RecrutaZero.start();
+		Dentinho.start();
+		try {
+			wait(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		Escovinha.report();
+		Escovinha.start();
+		while(!(Escovinha.stop)) {
+		}
 	}
 	
 	//3 barbeiros, 1 para cada tipo de cliente;
@@ -74,14 +80,18 @@ public class Barbearia{
 		LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 		Dentinho.modo = 1;
 		Otto.modo = 2;
-		while(Tainha.tentativas < 3) {
-			Tainha.run();
-			RecrutaZero.run();
-			Dentinho.run();
-			Otto.run();
-			Escovinha.run();
+		Tainha.start();
+		RecrutaZero.start();
+		Dentinho.start();
+		Otto.start();
+		try {
+			wait(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		Escovinha.report();
+		Escovinha.start();
+		while(!(Escovinha.stop)) {
+		}
 	}
 	
 	public void getClientes(int num) {
@@ -98,11 +108,11 @@ public class Barbearia{
 			else if (d1 < 0.75) tipo = 2;
 			else tipo = 3;
 			switch(tipo) {
-			case 0: tempo = 0;
+			case 0: tempo = 0; break;
 			// 0.9999999999999999 == 1
-			case 3: tempo = 1 + 2*d2;
-			case 2: tempo = 2 + 2*d2;
-			case 1: tempo = 4 + 2*d2;
+			case 3: tempo = 1 + 2*d2; break;
+			case 2: tempo = 2 + 2*d2; break;
+			case 1: tempo = 4 + 2*d2; 
 			}
 			entrada += "<" + tipo + "><" + tempo + ">";
 		}

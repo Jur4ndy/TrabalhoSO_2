@@ -27,7 +27,7 @@ public class Tenente extends Thread{
 	//Contadores
 	int reportCounter;
 	int atendCounter;
-	
+	public boolean stop = true;
 	Barbeiro RecrutaZero;
 	Barbeiro Dentinho;
 	Barbeiro Otto;
@@ -73,8 +73,9 @@ public class Tenente extends Thread{
 	}
 	
 	public void run() {
+	   stop = false;
 		try {
-			while (true) {
+			while (!(RecrutaZero.stop && Dentinho.stop && Otto.stop)) {
 				sleep(3000); //espera por 3 segundos antes de atualizar.
 				int ind = 0;
 				for (Cliente cliente : cadeiras_1) {
@@ -102,6 +103,8 @@ public class Tenente extends Thread{
 		catch(Exception e) {
 			System.out.println(e + " at Tenente.run()");
 		}
+		stop = true;
+		report();
 	}
 	
 	public void atualizaAtendimento() {
