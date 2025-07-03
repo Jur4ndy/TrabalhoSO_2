@@ -15,4 +15,8 @@ public class Cliente {
 		startTime = System.currentTimeMillis(); 
 	}
 	
+	public String toString() {
+		return "Cliente tipo: " + tipo + " tempo de serviço: " + tempoServico;
+	}
+	
 }

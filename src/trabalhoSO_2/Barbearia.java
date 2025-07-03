@@ -6,15 +6,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.concurrent.Semaphore;
 
 
 
 
 //todas as alterações às filas de clientes seram feitas pela barbearia
 public class Barbearia{
+    public static final Semaphore semaphore = new Semaphore(1);
 	LinkedList<Cliente> proxClientes = new LinkedList<Cliente>();
-	LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
-	int ocupacao = 0;
+	LinkedList<Cliente> cadeiras_1 = new LinkedList<Cliente>();
+	LinkedList<Cliente> cadeiras_2 = new LinkedList<Cliente>();
+	LinkedList<Cliente> cadeiras_3 = new LinkedList<Cliente>();
 	int tempoSono;
 	Barbeiro RecrutaZero;
 	Barbeiro Dentinho;
@@ -29,10 +32,10 @@ public class Barbearia{
 	 * @param tempoSono
 	 */
 	public Barbearia(int tempoSono) {
-		RecrutaZero = new Barbeiro(cadeiras, 0);
-		Dentinho = new Barbeiro(cadeiras, 0);
-		Otto = new Barbeiro(cadeiras, 0);
-		Escovinha = new Tenente(cadeiras, RecrutaZero, Dentinho, Otto);
+		RecrutaZero = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0);
+		Dentinho = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0);
+		Otto = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0);
+		Escovinha = new Tenente(cadeiras_1, cadeiras_2, cadeiras_3, RecrutaZero, Dentinho, Otto);
 		this.tempoSono = tempoSono;
 	}
 	
@@ -40,7 +43,7 @@ public class Barbearia{
 	
 	//1 Barbeiro;
 	public void casoA() {
-		Tainha = new Sargento(tempoSono, cadeiras, proxClientes);
+		Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
 		LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 		while(Tainha.tentativas < 3) {
 			Tainha.run();
@@ -53,7 +56,7 @@ public class Barbearia{
 	
 	//2 Barbeiros;
 	public void casoB() {
-		Tainha = new Sargento(tempoSono, cadeiras, proxClientes);
+		Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
 		LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 		Dentinho.modo = 0;
 		while(Tainha.tentativas < 3) {
@@ -67,7 +70,7 @@ public class Barbearia{
 	
 	//3 barbeiros, 1 para cada tipo de cliente;
 	public void casoC() {
-		Tainha = new Sargento(tempoSono, cadeiras, proxClientes);
+		Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
 		LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 		Dentinho.modo = 1;
 		Otto.modo = 2;
@@ -116,7 +119,7 @@ public class Barbearia{
 			for (String data : clientsData) {   
 				if (ind%2 == 0) {
 					tipo = Integer.parseInt(data);
-					tipo = Math.abs(tipo - 3) + 1;
+					if (tipo != 0) tipo = Math.abs(tipo - 3) + 1;
 				}
 				else {
 					tempoServico = Double.parseDouble(data);
@@ -141,7 +144,7 @@ public class Barbearia{
 			for (String data : clientsData) {   
 				if (ind%2 == 0) {
 					tipo = Integer.parseInt(data);
-					tipo = Math.abs(tipo - 3) + 1;
+					if(tipo != 0) tipo = Math.abs(tipo - 3) + 1;
 				}
 				else {
 					tempoServico = Double.parseDouble(data);

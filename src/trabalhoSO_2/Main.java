@@ -9,11 +9,11 @@ public class Main {
     //me mata pfv
 	Barbearia Dorminhoco = new Barbearia(3);
 	//home/ju/eclipse-workspace/TrabalhoSO_2/teste.txt
-	Dorminhoco.getClientes(1);
+	Dorminhoco.getClientes(10);
 	Dorminhoco.casoA();
-	Dorminhoco.getClientes(1);
+	Dorminhoco.getClientes(10);
 	Dorminhoco.casoB();
-	Dorminhoco.getClientes(1);
+	Dorminhoco.getClientes(10);
 	Dorminhoco.casoC();
 	}
 

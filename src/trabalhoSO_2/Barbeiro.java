@@ -5,14 +5,18 @@ import java.util.LinkedList;
 public class Barbeiro extends Thread {
 	int modo;
 	long tempoAtendimento;
-	LinkedList<Cliente> cadeiras;
+	LinkedList<Cliente> cadeiras_1 = new LinkedList<Cliente>();
+	LinkedList<Cliente> cadeiras_2 = new LinkedList<Cliente>();
+	LinkedList<Cliente> cadeiras_3 = new LinkedList<Cliente>();
 	double atendimento_1;
 	double atendimento_2;
 	double atendimento_3;
 	double atendCount;
 	
-	public Barbeiro(LinkedList<Cliente> cadeiras, int modo) {
-		this.cadeiras = cadeiras;
+	public Barbeiro(LinkedList<Cliente> cadeiras_1, LinkedList<Cliente> cadeiras_2, LinkedList<Cliente> cadeiras_3, int modo) {
+		this.cadeiras_1 = cadeiras_1;
+		this.cadeiras_2 = cadeiras_2;
+		this.cadeiras_3 = cadeiras_3;
 		this.modo = modo;
 	}
 	
@@ -52,62 +56,76 @@ public class Barbeiro extends Thread {
 		/*IMPORTANTE!!!!! Dois Barbeiros NUNCA devem escolher os seus clientes ao mesmo tempo, essa funcao so deve ser liberada
 		 * APOS o cliente alvo ser removido da lista.
 		*/
+		try {
+		Barbearia.semaphore.acquire();
 		int highestRank = 0;
-		int target = -1;
+		Cliente target;
 		int ind = 0;
 		switch (modo) {
 		case 0:
-			for (Cliente cliente : cadeiras) {
-				if (cliente.tipo > highestRank) {
-					target = ind;
-				    highestRank = cliente.tipo;
-				}
-				ind++;
+			if (!cadeiras_3.isEmpty()) {
+				target = cadeiras_3.pop();
+				Barbearia.semaphore.release();
+				return target;
 			}
-			if (target != -1) {
-				cadeiras.remove(target);			
-				return cadeiras.get(target);
+			if (!cadeiras_2.isEmpty()) {
+				target = cadeiras_2.pop();
+				Barbearia.semaphore.release();
+				return target;
+			}
+			if (!cadeiras_1.isEmpty()) {
+				target = cadeiras_1.pop();
+				Barbearia.semaphore.release();
+				return target;
 			}
 		case 1:
-			for (Cliente cliente : cadeiras) {
-				if (cliente.tipo == 1) {
-					cadeiras.remove(ind);
-					return cliente;
-				}
-				if (cliente.tipo > highestRank) {
-					target = ind;
-				    highestRank = cliente.tipo;
-				}
-				ind++;
+			if (!cadeiras_1.isEmpty()) {
+				target = cadeiras_1.pop();
+				Barbearia.semaphore.release();
+				return target;
 			}
-			if (target != -1) {
-				cadeiras.remove(target);			
-				return cadeiras.get(target);
+			if (!cadeiras_3.isEmpty()) {
+				target = cadeiras_3.pop();
+				Barbearia.semaphore.release();
+				return target;
+			}
+			if (!cadeiras_2.isEmpty()) {
+				target = cadeiras_2.pop();
+				Barbearia.semaphore.release();
+				return target;
 			}
 	   	case 2:
-	   		for (Cliente cliente : cadeiras) {
-				if (cliente.tipo == 2) {
-					cadeiras.remove(ind);
-					return cliente;
-				}
-				if (cliente.tipo > highestRank) {
-					target = ind;
-				    highestRank = cliente.tipo;
-				}
-				ind++;
+	   		if (!cadeiras_2.isEmpty()) {
+				target = cadeiras_2.pop();
+				Barbearia.semaphore.release();
+				return target;
 			}
-	   		if (target != -1) {
-				cadeiras.remove(target);			
-				return cadeiras.get(target);
+	   		if (!cadeiras_3.isEmpty()) {
+				target = cadeiras_3.pop();
+				Barbearia.semaphore.release();
+				return target;
 			}
-	   		default: return null;
+	   		if (!cadeiras_1.isEmpty()) {
+				target = cadeiras_1.pop();
+				Barbearia.semaphore.release();
+				return target;
+			}
+	   	default:  Barbearia.semaphore.release(); return null;
 		}
+		}
+		catch(Exception e) {
+			System.out.println(e + " at Barbeiro.java");
+
+		}
+		Barbearia.semaphore.release();
+		return null;
 	}
 	
 	public void run(){ // tell it to my heart tell me i'm the only one
 		try {
 			while (true) {
 				Cliente cliente = selectClient();
+				System.out.println("Barbeiro cortando " + cliente.toString());
 				tempoAtendimento = (long) cutHair(cliente)*1000;
 				sleep(tempoAtendimento);
 			}

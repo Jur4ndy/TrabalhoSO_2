@@ -7,7 +7,9 @@ public class Tenente extends Thread{
 	● Comprimento médio das filas
 	● Tempo médio de atendimento por categoria
 	● Tempo médio de espera por categoria*/
-	LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();
+	LinkedList<Cliente> cadeiras_1 = new LinkedList<Cliente>();
+	LinkedList<Cliente> cadeiras_2 = new LinkedList<Cliente>();
+	LinkedList<Cliente> cadeiras_3 = new LinkedList<Cliente>();
 	// Informação de Ocupação
 	double percent_0; //free
 	double percent_1; //rank 1	
@@ -30,8 +32,10 @@ public class Tenente extends Thread{
 	Barbeiro Dentinho;
 	Barbeiro Otto;
 	
-	public Tenente(LinkedList<Cliente> cadeiras, Barbeiro RecrutaZero, Barbeiro Dentinho, Barbeiro Otto) {
-		this.cadeiras = cadeiras;
+	public Tenente(LinkedList<Cliente> cadeiras_1, LinkedList<Cliente> cadeiras_2, LinkedList<Cliente> cadeiras_3, Barbeiro RecrutaZero, Barbeiro Dentinho, Barbeiro Otto) {
+		this.cadeiras_1 = cadeiras_1;
+		this.cadeiras_2 = cadeiras_2;
+		this.cadeiras_3 = cadeiras_3;
 		this.RecrutaZero = RecrutaZero;
 		this.Dentinho = Dentinho;
 		this.Otto = Otto;
@@ -72,21 +76,24 @@ public class Tenente extends Thread{
 		try {
 			while (true) {
 				sleep(3000); //espera por 3 segundos antes de atualizar.
-				for (Cliente cliente : cadeiras) {
-					switch (cliente.tipo) {
-						case 0: percent_0++;
-						case 1: 
-							percent_1++;
-							wait_1 += (System.currentTimeMillis() - cliente.startTime)/1000;
-						case 2: 
-							percent_2++;
-							wait_2 += (System.currentTimeMillis() - cliente.startTime)/1000;
-						case 3: 
-							percent_3++;
-							wait_3 += (System.currentTimeMillis() - cliente.startTime)/1000;	
-					}
-					length++;
+				int ind = 0;
+				for (Cliente cliente : cadeiras_1) {
+					percent_1++;
+					wait_1 += (System.currentTimeMillis() - cliente.startTime)/1000;
+					ind++;
 				}
+				for (Cliente cliente : cadeiras_2) {
+					percent_2++;
+					wait_2 += (System.currentTimeMillis() - cliente.startTime)/1000;
+					ind++;
+				}
+				for (Cliente cliente : cadeiras_1) {
+					percent_2++;
+					wait_2 += (System.currentTimeMillis() - cliente.startTime)/1000;
+					ind++;
+				}
+				length += ind;
+				percent_0 += 20-ind;
 				reportCounter++;
 				atualizaAtendimento();
 			}
