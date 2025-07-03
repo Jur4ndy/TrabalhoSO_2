@@ -12,7 +12,9 @@ public class Barbeiro extends Thread {
 	double atendimento_1 = 0;
 	double atendimento_2 = 0;
 	double atendimento_3 = 0;
-	double atendCount = 0;
+	double atendCount_1 = 0;
+	double atendCount_2 = 0;
+	double atendCount_3 = 0;
 	public boolean stop = true;
 	
 	public Barbeiro(LinkedList<Cliente> cadeiras_1, LinkedList<Cliente> cadeiras_2, LinkedList<Cliente> cadeiras_3, int modo) {
@@ -33,7 +35,9 @@ public class Barbeiro extends Thread {
 		atendimento_1 = 0;
 		atendimento_2 = 0;
 		atendimento_3 = 0;
-		atendCount = 0;
+		atendCount_1 = 0;
+		atendCount_2 = 0;
+		atendCount_3 = 0;
 	}
 	
 	
@@ -42,15 +46,19 @@ public class Barbeiro extends Thread {
 		if (cliente == null || cliente.tipo == 0) {
 			return 0;
 		}
+		
 		switch (cliente.tipo) {
 			case 1:
 				atendimento_1 += (cliente.tempoServico);
+				atendCount_1++;
 				break;	
 			case 2:
 				atendimento_2 += (cliente.tempoServico);
+				atendCount_2++;
 				break;
 			case 3:
 				atendimento_3 += (cliente.tempoServico);
+				atendCount_3++;
 				break;
 		}
 		return cliente.tempoServico;
@@ -128,7 +136,7 @@ public class Barbeiro extends Thread {
 	public void run(){ // tell it to my heart tell me i'm the only one
 		stop = false;
 		try {
-			while (!Sargento.stop) {
+			while (!Sargento.stop && !(cadeiras_1.isEmpty() && cadeiras_2.isEmpty() && cadeiras_3.isEmpty())) {
 				Cliente cliente = selectClient();
 				if (cliente != null) {
 					System.out.println("Barbeiro cortando " + cliente.toString());

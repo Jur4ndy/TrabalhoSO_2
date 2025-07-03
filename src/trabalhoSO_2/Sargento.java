@@ -24,7 +24,7 @@ public class Sargento extends Thread {
 	public void run() {
 		try {LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 
-			while (tentativas < 3) {
+			while (tentativas < 3 && !proxClientes.isEmpty()) {
 			sleep((long)(tempoSono*(1000)));
 			Barbearia.semaphore.acquire();
 			if (!proxClientes.isEmpty() && tentativas < 3) {

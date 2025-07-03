@@ -1,5 +1,6 @@
 package trabalhoSO_2;
 
+
 public class Cliente {
 	int tipo;
 	double tempoServico;
@@ -16,7 +17,13 @@ public class Cliente {
 	}
 	
 	public String toString() {
-		return "Cliente tipo: " + tipo + " tempo de serviço: " + tempoServico;
+		switch (tipo) {
+		case 0: return "Vazio"; 
+		case 1: return "Cliente tipo: Cabo tempo de serviço: " + tempoServico;
+		case 2: return "Cliente tipo: Sargento tempo de serviço: " + tempoServico;
+		case 3: return "Cliente tipo: Oficial tempo de serviço: " + tempoServico;
+		}
+		return "3RR0";
 	}
 	
 }
