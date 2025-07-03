@@ -2,10 +2,9 @@ package trabalhoSO_2;
 
 import java.util.LinkedList;
 
-
-public class Barbeiro extends Thread {
 	int modo;
 	long tempoAtendimento;
+
 	LinkedList<Cliente> cadeiras_1 = new LinkedList<Cliente>();
 	LinkedList<Cliente> cadeiras_2 = new LinkedList<Cliente>();
 	LinkedList<Cliente> cadeiras_3 = new LinkedList<Cliente>();
@@ -16,6 +15,7 @@ public class Barbeiro extends Thread {
 	double atendCount_2 = 0;
 	double atendCount_3 = 0;
 	public boolean stop = true;
+
 	
 	public Barbeiro(LinkedList<Cliente> cadeiras_1, LinkedList<Cliente> cadeiras_2, LinkedList<Cliente> cadeiras_3, int modo) {
 		this.cadeiras_1 = cadeiras_1;
@@ -31,6 +31,7 @@ public class Barbeiro extends Thread {
 	 */
 	// tipos de cliente 1-oficial 2-sargento 3-cabo 0-pausa
 	
+
 	public void resetAtend() {
 		atendimento_1 = 0;
 		atendimento_2 = 0;
@@ -145,6 +146,7 @@ public class Barbeiro extends Thread {
 				} 
 			}
 			stop = true;
+
 		}
 		catch (Exception e) {
 			System.out.println(e + " at Barbeiro.run()");
