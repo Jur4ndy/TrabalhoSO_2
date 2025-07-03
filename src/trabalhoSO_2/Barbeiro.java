@@ -2,6 +2,8 @@ package trabalhoSO_2;
 
 import java.util.LinkedList;
 
+public class Barbeiro extends Thread{
+	
 	int modo;
 	long tempoAtendimento;
 
