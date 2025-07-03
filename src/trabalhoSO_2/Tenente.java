@@ -150,5 +150,8 @@ public class Tenente extends Thread{
 		RecrutaZero.resetAtend();
 		Dentinho.resetAtend();
 		Otto.resetAtend();
-	}
+	};
+	
+	
+	
 }

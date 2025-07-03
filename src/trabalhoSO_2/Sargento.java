@@ -1,6 +1,6 @@
 package trabalhoSO_2;
-
 import java.util.LinkedList;
+import java.util.LinkedList.*;
 
 public class Sargento extends Thread {
 	double tempoSono; //em segundos
@@ -10,7 +10,6 @@ public class Sargento extends Thread {
 	LinkedList<Cliente> proxClientes = new LinkedList<Cliente>();
 	int tentativas;
 	static boolean stop = false;
-	
 	Sargento(double tempoSono, LinkedList<Cliente> cadeiras_1, LinkedList<Cliente> cadeiras_2, LinkedList<Cliente> cadeiras_3, LinkedList<Cliente> proxClientes) {
 		this.tempoSono = tempoSono;
 		this.cadeiras_1 = cadeiras_1;
@@ -23,24 +22,25 @@ public class Sargento extends Thread {
 	 * dormir + adicionar cliente nas cadeiras.
 	 */
 	public void run() {
-		try {
-			while (tentativas < 3 && !proxClientes.isEmpty()) {
-				sleep((long)(tempoSono*(1000)));
-				Barbearia.semaphore.acquire();
-				if (!proxClientes.isEmpty() && tentativas < 3) {
-					if ((cadeiras_1.size() + cadeiras_2.size() + cadeiras_3.size()) < 20) {
-						proxClientes.getFirst().resetTime();
-						switch(proxClientes.getFirst().tipo) {
-							case 0: tentativas ++; break;
-							case 1:	cadeiras_1.add(proxClientes.getFirst()); tentativas = 0; break;
-							case 2: cadeiras_2.add(proxClientes.getFirst()); tentativas = 0; break;
-							case 3: cadeiras_3.add(proxClientes.getFirst()); tentativas = 0; break;
-						}
-						System.out.println("Sargento adicionou: " + proxClientes.getFirst().toString());
+		try {LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
+
+			while (tentativas < 3) {
+			sleep((long)(tempoSono*(1000)));
+			Barbearia.semaphore.acquire();
+			if (!proxClientes.isEmpty() && tentativas < 3) {
+				if ((cadeiras_1.size() + cadeiras_2.size() + cadeiras_3.size()) < 20) {
+					proxClientes.getFirst().resetTime();
+					switch(proxClientes.getFirst().tipo) {
+						case 0: tentativas ++; break;
+						case 1:	cadeiras_1.add(proxClientes.getFirst()); tentativas = 0; break;
+						case 2: cadeiras_2.add(proxClientes.getFirst()); tentativas = 0; break;
+						case 3: cadeiras_3.add(proxClientes.getFirst()); tentativas = 0;
 					}
-					proxClientes.remove(0);	
+					System.out.println("Sargento adicionou: " + proxClientes.getFirst().toString());
 				}
-				Barbearia.semaphore.release();
+				proxClientes.remove(0);	
+			}
+			Barbearia.semaphore.release();
 			}
 		}
 		catch(Exception e) {

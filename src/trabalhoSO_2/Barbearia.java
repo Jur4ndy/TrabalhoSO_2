@@ -8,6 +8,9 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
 
+
+
+
 //todas as alterações às filas de clientes seram feitas pela barbearia
 public class Barbearia{
     public static final Semaphore semaphore = new Semaphore(1);
@@ -22,6 +25,8 @@ public class Barbearia{
 	Sargento Tainha;
 	Tenente Escovinha;
 	
+	
+	
 	/**
 	 * Tempo de Sono deve ser dado em segundos
 	 * @param tempoSono
@@ -34,111 +39,59 @@ public class Barbearia{
 		this.tempoSono = tempoSono;
 	}
 	
+	//Função de ler os clietes
+	
 	//1 Barbeiro;
 	public void casoA() {
-	    Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
-	    
-	    Tainha.start();
-	    try {
-	        Thread.sleep(100); // pausa curta para dar tempo do sistema iniciar
-	    } catch (InterruptedException e) {
-	        e.printStackTrace();
-	    }
-	    
-	    RecrutaZero.start();
-
-	    try {
-	        Thread.sleep(100); // pausa curta para dar tempo do sistema iniciar
-	    } catch (InterruptedException e) {
-	        e.printStackTrace();
-	    }
-
-	    Escovinha.start();
-
-	    try {
-	        // Wait for all threads to complete
-	        Escovinha.join(); // espera o Tenente terminar
-	        Tainha.join(); // espera o Sargento terminar
-	        RecrutaZero.join(); // espera o Barbeiro terminar
-	    } catch (InterruptedException e) {
-	        e.printStackTrace();
-	    }
-	    
-	    System.out.println("Simulação Caso A finalizada.");
-	}
-
-	//2 Barbeiros;
-	public void casoB() {
 		Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
-		Dentinho.modo = 0;
+		LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 		Tainha.start();
-		try {
-	        Thread.sleep(100); // pausa curta para dar tempo do sistema iniciar
-	    } catch (InterruptedException e) {
-	        e.printStackTrace();
-	    }
-		
 		RecrutaZero.start();
-		Dentinho.start();
-		
-		 try {
-		        Thread.sleep(100); // pausa curta para dar tempo do sistema iniciar
-		    } catch (InterruptedException e) {
-		        e.printStackTrace();
-		    }
-		 
-		Escovinha.start();
-		
 		try {
-			// Wait for all threads to complete
-			Escovinha.join(); // espera o Tenente terminar
-			Tainha.join(); // espera o Sargento terminar
-			RecrutaZero.join(); // espera o primeiro Barbeiro terminar
-			Dentinho.join(); // espera o segundo Barbeiro terminar
+			wait(10);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("Simulação Caso B finalizada.");
+		Escovinha.start();
+		while(Escovinha.stop) {	}
+	}
+	
+	//2 Barbeiros;
+	public void casoB() {
+		Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
+		LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
+		Dentinho.modo = 0;
+		Tainha.start();
+		RecrutaZero.start();
+		Dentinho.start();
+		try {
+			wait(10);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		Escovinha.start();
+		while(!(Escovinha.stop)) {
+		}
 	}
 	
 	//3 barbeiros, 1 para cada tipo de cliente;
 	public void casoC() {
 		Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
+		LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 		Dentinho.modo = 1;
 		Otto.modo = 2;
 		Tainha.start();
-		
-		try {
-	        Thread.sleep(100); // pausa curta para dar tempo do sistema iniciar
-	    } catch (InterruptedException e) {
-	        e.printStackTrace();
-	    }
-		
 		RecrutaZero.start();
 		Dentinho.start();
 		Otto.start();
-		
-		 try {
-		        Thread.sleep(100); // pausa curta para dar tempo do sistema iniciar
-		    } catch (InterruptedException e) {
-		        e.printStackTrace();
-		    }
-		 
-		Escovinha.start();
-		
 		try {
-			// Wait for all threads to complete
-			Escovinha.join(); // espera o Tenente terminar
-			Tainha.join(); // espera o Sargento terminar
-			RecrutaZero.join(); // espera o primeiro Barbeiro terminar
-			Dentinho.join(); // espera o segundo Barbeiro terminar
-			Otto.join(); // espera o terceiro Barbeiro terminar
+			wait(10);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("Simulação Caso C finalizada.");
+		Escovinha.start();
+		while(!(Escovinha.stop)) {
+		}
 	}
 	
 	public void getClientes(int num) {
@@ -155,10 +108,11 @@ public class Barbearia{
 			else if (d1 < 0.75) tipo = 2;
 			else tipo = 3;
 			switch(tipo) {
-				case 0: tempo = 0; break;
-				case 3: tempo = 1 + 2*d2; break;
-				case 2: tempo = 2 + 2*d2; break;
-				case 1: tempo = 4 + 2*d2; break;
+			case 0: tempo = 0; break;
+			// 0.9999999999999999 == 1
+			case 3: tempo = 1 + 2*d2; break;
+			case 2: tempo = 2 + 2*d2; break;
+			case 1: tempo = 4 + 2*d2; 
 			}
 			entrada += "<" + tipo + "><" + tempo + ">";
 		}
@@ -166,24 +120,24 @@ public class Barbearia{
 	}
 	
 	public void getClients(String line) {		
-		line = line.replace("<", "");
-		String[] clientsData = line.split(">");
-		int tipo = -1;
-		double tempoServico = -1;
-		int ind = 0;
-		
-		for (String data : clientsData) {   
-			if (ind%2 == 0) {
-				tipo = Integer.parseInt(data);
-				if (tipo != 0) tipo = Math.abs(tipo - 3) + 1;
+			line = line.replace("<", "");
+			String[] clientsData = line.split(">");
+			int tipo = -1;
+			double tempoServico = -1;
+			int ind = 0;
+			
+			for (String data : clientsData) {   
+				if (ind%2 == 0) {
+					tipo = Integer.parseInt(data);
+					if (tipo != 0) tipo = Math.abs(tipo - 3) + 1;
+				}
+				else {
+					tempoServico = Double.parseDouble(data);
+					proxClientes.add(new Cliente(tipo, tempoServico));				
+				}
+				ind++;
 			}
-			else {
-				tempoServico = Double.parseDouble(data);
-				proxClientes.add(new Cliente(tipo, tempoServico));				
-			}
-			ind++;
-		}
-		System.out.println("Clientes na fila: " + (ind+1)/2);
+			System.out.println("Clientes na fila: " + (ind+1)/2);
 	}
 
 	public void getClientes(String text) {
@@ -216,3 +170,17 @@ public class Barbearia{
 		}
 	}
 }
+
+class SortByTipo implements Comparator<Cliente> {
+
+
+	public int compare(Cliente c1, Cliente c2) {
+		// TODO Auto-generated method stub
+		return Integer.compare(c1.tipo, c2.tipo);
+	}
+}
+
+
+
+
+
