@@ -1,6 +1,5 @@
 package trabalhoSO_2;
 
-
 public class Cliente {
 	int tipo;
 	double tempoServico;
@@ -25,5 +24,4 @@ public class Cliente {
 		}
 		return "3RR0";
 	}
-	
 }
