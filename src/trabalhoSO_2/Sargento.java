@@ -24,22 +24,21 @@ public class Sargento extends Thread {
 	public void run() {
 		try {LinkedList<Cliente> cadeiras = new LinkedList<Cliente>();	
 
-			while (tentativas < 3) {
+			while (tentativas < 3 && !proxClientes.isEmpty()) {
 			sleep((long)(tempoSono*(1000)));
 			Barbearia.semaphore.acquire();
-			if (!proxClientes.isEmpty() && tentativas < 3) {
-				if ((cadeiras_1.size() + cadeiras_2.size() + cadeiras_3.size()) < 20) {
-					proxClientes.getFirst().resetTime();
-					switch(proxClientes.getFirst().tipo) {
-						case 0: tentativas ++; break;
-						case 1:	cadeiras_1.add(proxClientes.getFirst()); tentativas = 0; break;
-						case 2: cadeiras_2.add(proxClientes.getFirst()); tentativas = 0; break;
-						case 3: cadeiras_3.add(proxClientes.getFirst()); tentativas = 0;
-					}
-					System.out.println("Sargento adicionou: " + proxClientes.getFirst().toString());
+			if ((cadeiras_1.size() + cadeiras_2.size() + cadeiras_3.size()) < 20) {
+				proxClientes.getFirst().resetTime();
+				switch(proxClientes.getFirst().tipo) {
+					case 0: tentativas ++; break;
+					case 1:	cadeiras_1.add(proxClientes.getFirst()); tentativas = 0; break;
+					case 2: cadeiras_2.add(proxClientes.getFirst()); tentativas = 0; break;
+					case 3: cadeiras_3.add(proxClientes.getFirst()); tentativas = 0;
 				}
-				proxClientes.remove(0);	
+				System.out.println("Sargento adicionou: " + proxClientes.getFirst().toString());
 			}
+			else tentativas++;
+			proxClientes.remove(0);	
 			Barbearia.semaphore.release();
 			}
 		}

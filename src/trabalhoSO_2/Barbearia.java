@@ -15,7 +15,7 @@ public class Barbearia{
 	LinkedList<Cliente> cadeiras_1 = new LinkedList<Cliente>();
 	LinkedList<Cliente> cadeiras_2 = new LinkedList<Cliente>();
 	LinkedList<Cliente> cadeiras_3 = new LinkedList<Cliente>();
-	int tempoSono;
+	double tempoSono;
 	Barbeiro RecrutaZero;
 	Barbeiro Dentinho;
 	Barbeiro Otto;
@@ -29,7 +29,7 @@ public class Barbearia{
 	 * Tempo de Sono deve ser dado em segundos
 	 * @param tempoSono
 	 */
-	public Barbearia(int tempoSono) {
+	public Barbearia(double tempoSono) {
 		RecrutaZero = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0);
 		Dentinho = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0);
 		Otto = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0);

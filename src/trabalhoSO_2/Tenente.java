@@ -138,7 +138,7 @@ public class Tenente extends Thread{
 			// Wait a bit for other threads to start
 			sleep(1000);
 			
-			while (!Sargento.stop) {  // Changed condition - run while Sargento is still working
+			while (!Sargento.stop || !(cadeiras_1.isEmpty() && cadeiras_2.isEmpty() && cadeiras_3.isEmpty())) { 
 				sleep(3000); // Wait 3 seconds before updating
 				
 				// Reset counters for this iteration
