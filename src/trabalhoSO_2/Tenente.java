@@ -1,6 +1,9 @@
 package trabalhoSO_2;
 
 import java.util.LinkedList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Tenente extends Thread{
 	/*● Estado de ocupação da(s) cadeira(s) (% por categoria e livre)
@@ -57,7 +60,6 @@ public class Tenente extends Thread{
 	}
 	
 	public void report() {
-		System.out.println("\n========== RELATÓRIO FINAL ==========");
 		
 		// Calculate averages
 		double avgLength = reportCounter > 0 ? length / reportCounter : 0;
@@ -90,44 +92,59 @@ public class Tenente extends Thread{
 			}
 		}
 		
-		System.out.println("COMPRIMENTO MÉDIO DAS FILAS:");
-		System.out.println("\tTotal: " + String.format("%.2f", avgLength));
-		System.out.println("\tCabos: " + String.format("%.2f", avgLength_1));
-		System.out.println("\tSargentos: " + String.format("%.2f", avgLength_2));
-		System.out.println("\tOficiais: " + String.format("%.2f", avgLength_3));
-		System.out.println("\tVazio: " + String.format("%.2f", avgLength_0));
+		String report = "\n========== RELATÓRIO FINAL ==========\n";
+
+		report += "-COMPRIMENTO MÉDIO DAS FILAS:\n";
+		report += "\tTotal: " + String.format("%.2f", avgLength) + "\n";
+		report += "\tCabos: " + String.format("%.2f", avgLength_1) + "\n";
+		report += "\tSargentos: " + String.format("%.2f", avgLength_2) + "\n";
+		report += "\tOficiais: " + String.format("%.2f", avgLength_3) + "\n";
+		report += "\tVazio: " + String.format("%.2f", avgLength_0) + "\n";
+
+		report += "\n-PORCENTAGEM MÉDIA DE OCUPAÇÃO DAS CADEIRAS:\n";
+		report += "\tVazio: " + String.format("%.2f", avgPercent_0) + "%\n";
+		report += "\tCabos: " + String.format("%.2f", avgPercent_1) + "%\n";
+		report += "\tSargentos: " + String.format("%.2f", avgPercent_2) + "%\n";
+		report += "\tOficiais: " + String.format("%.2f", avgPercent_3) + "%\n";
+
+		report += "\n-TEMPO MÉDIO DE ESPERA:\n";
+		report += "\tCabos: " + String.format("%.2f", avgWait_1) + "s\n";
+		report += "\tSargentos: " + String.format("%.2f", avgWait_2) + "s\n";
+		report += "\tOficiais: " + String.format("%.2f", avgWait_3) + "s\n";
+
+		report += "\n-TEMPO MÉDIO DE ATENDIMENTO:\n";
+		report += "\tCabos: " + String.format("%.2f", avgAtend_1) + "s\n";
+		report += "\tSargentos: " + String.format("%.2f", avgAtend_2) + "s\n";
+		report += "\tOficiais: " + String.format("%.2f", avgAtend_3) + "s\n";
+
+		report += "\n-NÚMERO DE PESSOAS ATENDIDAS:\n";
+		report += "\tCabos: " + totalServiced_1 + "\n";
+		report += "\tSargentos: " + totalServiced_2 + "\n";
+		report += "\tOficiais: " + totalServiced_3 + "\n";
+		report += "\tTotal: " + (totalServiced_1 + totalServiced_2 + totalServiced_3) + "\n";
+
+		report += "\n-PESSOAS RESTANTES EM PROXCLIENTES:\n";
+		report += "\tVazio: " + proxCount_0 + "\n";
+		report += "\tCabos: " + proxCount_1 + "\n";
+		report += "\tSargentos: " + proxCount_2 + "\n";
+		report += "\tOficiais: " + proxCount_3 + "\n";
+		report += "\tTotal: " + proxClientes.size() + "\n";
+
+		report += "\n-NÚMERO DE RELATÓRIOS GERADOS: " + reportCounter + "\n";
+		report += "=====================================\n";
 		
-		System.out.println("\nPORCENTAGEM MÉDIA DE OCUPAÇÃO DAS CADEIRAS:");
-		System.out.println("\tVazio: " + String.format("%.2f", avgPercent_0) + "%");
-		System.out.println("\tCabos: " + String.format("%.2f", avgPercent_1) + "%");
-		System.out.println("\tSargentos: " + String.format("%.2f", avgPercent_2) + "%");
-		System.out.println("\tOficiais: " + String.format("%.2f", avgPercent_3) + "%");
+		 try {
+		      FileWriter myWriter = new FileWriter("TenenteReport.txt");
+		      myWriter.write(report);
+		      myWriter.close();
+		      System.out.println("Arquivo Criado :)");
+		    } catch (IOException e) {
+		      System.out.println("Erro na criacao do arquivo :(");
+		      e.printStackTrace();
+		    }
 		
-		System.out.println("\nTEMPO MÉDIO DE ESPERA:");
-		System.out.println("\tCabos: " + String.format("%.2f", avgWait_1) + "s");
-		System.out.println("\tSargentos: " + String.format("%.2f", avgWait_2) + "s");
-		System.out.println("\tOficiais: " + String.format("%.2f", avgWait_3) + "s");
-		
-		System.out.println("\nTEMPO MÉDIO DE ATENDIMENTO:");
-		System.out.println("\tCabos: " + String.format("%.2f", avgAtend_1) + "s");
-		System.out.println("\tSargentos: " + String.format("%.2f", avgAtend_2) + "s");
-		System.out.println("\tOficiais: " + String.format("%.2f", avgAtend_3) + "s");
-		
-		System.out.println("\nNÚMERO DE PESSOAS ATENDIDAS:");
-		System.out.println("\tCabos: " + totalServiced_1);
-		System.out.println("\tSargentos: " + totalServiced_2);
-		System.out.println("\tOficiais: " + totalServiced_3);
-		System.out.println("\tTotal: " + (totalServiced_1 + totalServiced_2 + totalServiced_3));
-		
-		System.out.println("\nPESSOAS RESTANTES EM PROXCLIENTES:");
-		System.out.println("\tVazio: " + proxCount_0);
-		System.out.println("\tCabos: " + proxCount_1);
-		System.out.println("\tSargentos: " + proxCount_2);
-		System.out.println("\tOficiais: " + proxCount_3);
-		System.out.println("\tTotal: " + proxClientes.size());
-		
-		System.out.println("\nNÚMERO DE RELATÓRIOS GERADOS: " + reportCounter);
-		System.out.println("=====================================\n");
+		System.out.println(report);
+
 	}
 	
 	public void run() {
@@ -135,17 +152,17 @@ public class Tenente extends Thread{
 		System.out.println("Tenente iniciado - Monitoramento em andamento...");
 		
 		try {
-			// Wait a bit for other threads to start
+			// Espera um tempo pra que as outras threads comecem direito
 			sleep(1000);
 			
 			while (!Sargento.stop || !(cadeiras_1.isEmpty() && cadeiras_2.isEmpty() && cadeiras_3.isEmpty())) { 
-				sleep(3000); // Wait 3 seconds before updating
+				sleep(3000); // Atualiza de 3 em 3 segundos
 				
-				// Reset counters for this iteration
+				// Reset contadores 
 				int currentEmpty = 20;
 				int current_1 = 0, current_2 = 0, current_3 = 0;
 				
-				// Count current occupation and calculate wait times
+				// Percorre as cadeiras pra pegar informacao
 				for (Cliente cliente : cadeiras_1) {
 					current_1++;
 					currentEmpty--;
@@ -180,7 +197,7 @@ public class Tenente extends Thread{
 				reportCounter++;
 				atualizaAtendimento();
 				
-				// Print periodic status
+				// Printa os status das cadeiras a cada 10 reports (30 segundos)
 				if (reportCounter % 10 == 0) {
 					System.out.println("Status - Cadeiras ocupadas: " + 
 						(current_1 + current_2 + current_3) + "/20 | " +

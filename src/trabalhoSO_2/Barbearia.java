@@ -2,7 +2,6 @@ package trabalhoSO_2;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -22,7 +21,7 @@ public class Barbearia{
 	Sargento Tainha;
 	Tenente Escovinha;
 	
-	// Flag to prevent simultaneous simulations
+	// previne que multiplas simulacoes rodem ao mesmo trempo
 	private boolean simulationRunning = false;
 	
 	/**
@@ -37,25 +36,29 @@ public class Barbearia{
 		this.tempoSono = tempoSono;
 	}
 	
+	/**
+	 * Reseta todas os atributos dessa classe ao seu estado padrao
+	 */
 	private void resetSimulation() {
-		// Reset all thread states
+		// Reset paradas
 		RecrutaZero.stop = true;
 		Dentinho.stop = true;
 		Otto.stop = true;
 		Sargento.stop = false;
 		Escovinha.stop = true;
 		
-		// Reset barbeiro statistics
+		// Reset estatisticas
 		RecrutaZero.resetAtend();
 		Dentinho.resetAtend();
 		Otto.resetAtend();
 		
-		// Clear all queues
+		// Limpa as cadeiras
 		cadeiras_1.clear();
 		cadeiras_2.clear();
 		cadeiras_3.clear();
+		proxClientes.clear();
 		
-		// Reset simulation flag
+		// Nao ha mais nenhuma simulacao rodando
 		simulationRunning = false;
 		
 		System.out.println("Simulação resetada - Pronta para nova execução");
@@ -63,20 +66,20 @@ public class Barbearia{
 	
 	private void waitForSimulationEnd() {
 		try {
-			// Wait for Sargento to finish
+			
 			while (!Sargento.stop) {
 				Thread.sleep(100);
 			}
 			
-			// Wait a bit more for barbeiros to finish current clients
+		
 			Thread.sleep(2000);
 			
-			// Wait for Tenente to finish its report
+			
 			while (!Escovinha.stop) {
 				Thread.sleep(100);
 			}
 			
-			// Wait for barbeiros to completely stop
+
 			while (!RecrutaZero.stop || !Dentinho.stop || !Otto.stop) {
 				Thread.sleep(100);
 			}
@@ -99,23 +102,23 @@ public class Barbearia{
 		simulationRunning = true;
 		System.out.println("=== INICIANDO CASO A - 1 BARBEIRO ===");
 		
-		// Create new instances for this simulation
+		// Criar novas instâncias pra cada simulacao
 		RecrutaZero = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0);
-		Dentinho = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0); // Create but don't start
-		Otto = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0); // Create but don't start
+		Dentinho = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0); // Criada mas nao utilizada
+		Otto = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0); // Criada mas nao utilizada
 		Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
 		Escovinha = new Tenente(cadeiras_1, cadeiras_2, cadeiras_3, proxClientes, RecrutaZero, Dentinho, Otto);
 		
-		// Only RecrutaZero works in Case A
+		
 		RecrutaZero.modo = 0;
 		
-		// Start threads
+		// Comeca as threads
 		Tainha.start();
 		RecrutaZero.start();
-		// Dentinho and Otto are NOT started in Case A
+
 		
 		try {
-			Thread.sleep(100); // Small delay to let barbeiros start
+			Thread.sleep(100); // Pequeno delay 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -138,25 +141,25 @@ public class Barbearia{
 		simulationRunning = true;
 		System.out.println("=== INICIANDO CASO B - 2 BARBEIROS ===");
 		
-		// Create new instances for this simulation
+
 		RecrutaZero = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0);
 		Dentinho = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0);
-		Otto = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0); // Create Otto but don't start it
+		Otto = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0); // Criado mas nao utilizado
 		Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
 		Escovinha = new Tenente(cadeiras_1, cadeiras_2, cadeiras_3, proxClientes, RecrutaZero, Dentinho, Otto);
 		
-		// Both barbeiros work with mode 0 (serve any client type, priority: Oficial > Sargento > Cabo)
+		// Ambos usam a mesma prioridade
 		RecrutaZero.modo = 0;
 		Dentinho.modo = 0;
 		
-		// Start threads
+		// Inicializa as threads
 		Tainha.start();
 		RecrutaZero.start();
 		Dentinho.start();
-		// Otto is NOT started in Case B
+		// Otto nao e inicializado para esse caso
 		
 		try {
-			Thread.sleep(100); // Small delay to let barbeiros start
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -179,21 +182,21 @@ public class Barbearia{
 		simulationRunning = true;
 		System.out.println("=== INICIANDO CASO C - 3 BARBEIROS ===");
 		
-		// Create new instances for this simulation
+
 		RecrutaZero = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 0);
 		Dentinho = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 1);
 		Otto = new Barbeiro(cadeiras_1, cadeiras_2, cadeiras_3, 2);
 		Tainha = new Sargento(tempoSono, cadeiras_1, cadeiras_2, cadeiras_3, proxClientes);
 		Escovinha = new Tenente(cadeiras_1, cadeiras_2, cadeiras_3, proxClientes, RecrutaZero, Dentinho, Otto);
 		
-		// Start threads
+		// Todas as threads sao utlizadas
 		Tainha.start();
 		RecrutaZero.start();
 		Dentinho.start();
 		Otto.start();
 		
 		try {
-			Thread.sleep(100); // Small delay to let barbeiros start
+			Thread.sleep(100); 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -204,11 +207,13 @@ public class Barbearia{
 		waitForSimulationEnd();
 		resetSimulation();
 	}
-	
+	 
+	/**
+	 * Gera uma fila aleatória.
+	 * @param num
+	 */
 	public void getClientes(int num) {
-		// Clear previous clients before generating new ones
-		proxClientes.clear();
-		
+
 		String entrada = "";
 		double d1 = 0;
 		int tipo = 0;
@@ -234,7 +239,7 @@ public class Barbearia{
 	}
 	
 	public void getClients(String line) {		
-		// Clear previous clients before adding new ones
+		// Limpa a lista antes de criar uma nova
 		proxClientes.clear();
 		
 		line = line.replace("<", "");
@@ -258,7 +263,7 @@ public class Barbearia{
 	}
 
 	public void getClientes(String text) {
-		// Clear previous clients before loading new ones
+		// Limpa a lista antes de criar uma nova.
 		proxClientes.clear();
 		
 		try {

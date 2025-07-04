@@ -1,0 +1,40 @@
+
+========== RELATÓRIO FINAL ==========
+-COMPRIMENTO MÉDIO DAS FILAS:
+	Total: 8.91
+	Cabos: 0.73
+	Sargentos: 4.64
+	Oficiais: 3.55
+	Vazio: 11.09
+
+-PORCENTAGEM MÉDIA DE OCUPAÇÃO DAS CADEIRAS:
+	Vazio: 55.45%
+	Cabos: 3.64%
+	Sargentos: 23.18%
+	Oficiais: 17.73%
+
+-TEMPO MÉDIO DE ESPERA:
+	Cabos: 3.07s
+	Sargentos: 8.07s
+	Oficiais: 7.38s
+
+-TEMPO MÉDIO DE ATENDIMENTO:
+	Cabos: 2.03s
+	Sargentos: 3.00s
+	Oficiais: 4.85s
+
+-NÚMERO DE PESSOAS ATENDIDAS:
+	Cabos: 8
+	Sargentos: 12
+	Oficiais: 11
+	Total: 31
+
+-PESSOAS RESTANTES EM PROXCLIENTES:
+	Vazio: 0
+	Cabos: 0
+	Sargentos: 0
+	Oficiais: 0
+	Total: 0
+
+-NÚMERO DE RELATÓRIOS GERADOS: 11
+=====================================
