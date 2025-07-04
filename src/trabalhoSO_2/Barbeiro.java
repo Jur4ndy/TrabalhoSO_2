@@ -3,6 +3,7 @@ package trabalhoSO_2;
 import java.util.LinkedList;
 
 
+
 public class Barbeiro extends Thread {
 	int modo;
 	long tempoAtendimento;
@@ -137,7 +138,7 @@ public class Barbeiro extends Thread {
 	public void run(){ // tell it to my heart tell me i'm the only one
 		stop = false;
 		try {
-			while (!Sargento.stop) {
+			while (!Sargento.stop|| !(cadeiras_1.isEmpty() && cadeiras_2.isEmpty() && cadeiras_3.isEmpty())) {
 				Cliente cliente = selectClient();
 				if (cliente != null) {
 					System.out.println("Barbeiro cortando " + cliente.toString());
